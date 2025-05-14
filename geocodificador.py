@@ -3,7 +3,7 @@ from math import radians, sin, cos, sqrt, atan2
 
 # ⚠️ ATENÇÃO: NÃO utilizar a chave abaixo para além desse projeto, por gentileza!
 
-API_KEY = "AIzaSyAEQbTwSKwW8I8u73kHsmzKjQTz9_hbpVE" 
+API_KEY = "INSIRA_AQUI_A_CHAVE_DA_API" 
 
 def obter_coordenadas(endereco):
     url = f"https://maps.googleapis.com/maps/api/geocode/json"
