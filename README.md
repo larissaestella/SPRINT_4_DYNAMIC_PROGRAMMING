@@ -1,6 +1,6 @@
    MATHEUS FARIAS DE LIMA - RM554254    
    MIGUEL MAURICIO PARRADO PATARROYO – RM554007   
-   LARISSA ESTELLA GONÇALVES DOS SANTOS– RM552695  
+   LARISSA ESTELLA GONÇALVES DOS SANTOS – RM552695  
    VITOR PINHEIRO NASCIMENTO – RM553693    
    PEDRO HENRIQUE CHAVES - RM553988  
 
@@ -8,7 +8,7 @@
 
 ## Descrição
 
-Este projeto visa implementar funcionalidades de **grafos** e o **algoritmo de Dijkstra** para otimizar rotas de entrega de peças automotivas da Rede , utilizando coordenadas geográficas para calcular as distâncias entre lojas e o ponto de origem (comprador).
+Este projeto visa implementar funcionalidades de **grafos** e o **algoritmo de Dijkstra** para otimizar rotas de entrega de peças automotivas da Rede Âncora, utilizando coordenadas geográficas para calcular as distâncias entre lojas e o ponto de origem (comprador).
 
 ---
 
@@ -49,6 +49,8 @@ SPRINT_4_DYNAMIC_PROGRAMMING/
 │   ├── construir_grafo.html
 │   ├── exibir_grafo.html
 │   └── index.html
+├── static/
+│   └── style.css
 ├── requirements.txt
 └── README.md
 ```
@@ -56,7 +58,7 @@ SPRINT_4_DYNAMIC_PROGRAMMING/
 
 ## ▶️ Como Rodar o Projeto
 
-1. **Clone o repositório ou baixe os arquivos** para sua máquina.
+1. **Clone esse repositório ou baixe os arquivos** para sua máquina.
 2. Verifique se você tem o Python 3 instalado.
 3. No terminal, navegue até a pasta do projeto:
 
@@ -85,10 +87,10 @@ SPRINT_4_DYNAMIC_PROGRAMMING/
 
 Certifique-se de instalar as dependências listadas no arquivo requirements.txt para rodar o projeto corretamente:
 
-```
+   ```
     Flask #framework web usado para construir a aplicação e interface HTML.
     requests
-```
+   ```
 
 ---
 
@@ -96,11 +98,11 @@ Certifique-se de instalar as dependências listadas no arquivo requirements.txt 
 
 Ao acessar o sistema, você encontrará as seguintes opções:
 
-    Inserir endereço e construir grafo
+    Construir grafo (Inserir endereço para construir os grafos)
 
     Exibir grafo com distâncias em Km
 
-    Calcular menor caminho e exibir rota otimizada com links do Google Maps
+    Calcular rota (cálculo do menor caminho e exibição da rota otimizada com links do Google Maps)
 
 O sistema permite criar o grafo a partir do endereço do comprador e das lojas fixas e então calcular e exibir a melhor rota de entrega.
 
