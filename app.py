@@ -64,6 +64,7 @@ def construir_grafo():
             return render_template('construir_grafo.html', sucesso=True)
         else:
             return render_template('construir_grafo.html', erro=True)
+        
     return render_template('construir_grafo.html')
 
 
@@ -90,7 +91,6 @@ def exibir_grafo():
         grafo=grafo,
         erro=False
     )
-
 
 @app.route('/calcular_rota', methods=['POST', 'GET'])
 def calcular_rota():
@@ -147,17 +147,25 @@ def calcular_rota():
         rota, distancia_total = otimizar_rota_dijkstra(loja_origem, entregas)
         tempo_estimado = (distancia_total / 40) * 60  # 40 km/h média
 
-        # Coordenadas
-        coordenadas = {loja_origem['nome']: loja_origem['coordenadas']}
+        # Dicionários auxiliares
+        coordenadas_por_nome = {}
+        nomes_por_coordenada = {}
+
+        # Loja de origem
+        coordenadas_por_nome[loja_origem['nome']] = loja_origem['coordenadas']
+        nomes_por_coordenada[loja_origem['coordenadas']] = loja_origem['nome']
+
+        # Entregas
         for entrega in entregas:
-            coordenadas[entrega['nome']] = entrega['coordenadas']
+            coordenadas_por_nome[entrega['nome']] = entrega['coordenadas']
+            nomes_por_coordenada[entrega['coordenadas']] = entrega['nome']
 
         # Links e distâncias
         links = []
         distancias = []
         for origem, destino in rota:
-            coord_origem = coordenadas[origem]
-            coord_destino = coordenadas[destino]
+            coord_origem = coordenadas_por_nome[origem]
+            coord_destino = coordenadas_por_nome[destino]
             links.append(gerar_links_rota_google(coord_origem, coord_destino))
             distancias.append(round(calcular_distancia_km(coord_origem, coord_destino), 2))
 
@@ -167,14 +175,11 @@ def calcular_rota():
             distancia=round(distancia_total, 2),
             tempo=tempo_estimado,
             links=links,
-            coordenadas=coordenadas,
+            coordenadas=coordenadas_por_nome,
             distancias=distancias
         )
 
     return render_template('calcular_rota.html', lojas=lojas)
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

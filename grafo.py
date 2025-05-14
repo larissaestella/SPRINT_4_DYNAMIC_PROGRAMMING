@@ -12,8 +12,6 @@ def construir_grafo_lojas(lojas, comprador):
     return grafo
 
 def otimizar_rota_dijkstra(origem, entregas):
-    import heapq
-
     pontos = [origem] + entregas
     grafo = {}
     for i in range(len(pontos)):
@@ -24,19 +22,20 @@ def otimizar_rota_dijkstra(origem, entregas):
                 grafo.setdefault(p1["nome"], {})[p2["nome"]] = d
 
     visitados = set()
-    caminho = [origem["nome"]]
+    caminho = []
     atual = origem["nome"]
+    visitados.add(atual)
     distancia_total = 0
 
-    while len(visitados) < len(pontos) - 1:
-        visitados.add(atual)
+    while len(visitados) < len(pontos):
         vizinhos = grafo[atual]
-        proximo = min((n for n in vizinhos if n not in visitados), key=lambda n: vizinhos[n])
-        distancia_total += vizinhos[proximo]
-        caminho.append(proximo)
+        nao_visitados = [(dest, dist) for dest, dist in vizinhos.items() if dest not in visitados]
+        if not nao_visitados:
+            break
+        proximo, dist = min(nao_visitados, key=lambda x: x[1])
+        caminho.append((atual, proximo))  # <-- Agora retorna pares de nomes
+        distancia_total += dist
+        visitados.add(proximo)
         atual = proximo
 
-    nome_para_coord = {p["nome"]: p["coordenadas"] for p in pontos}
-    rota_com_coords = [(nome, nome_para_coord[nome]) for nome in caminho]
-
-    return rota_com_coords, round(distancia_total, 2)
+    return caminho, round(distancia_total, 2)

@@ -70,28 +70,11 @@
         <input type="text" name="endereco" required>
         <button type="submit">Construir</button>
     </form>
-        {% if erro %}
-            <p>❌ Grafo não encontrado. Por favor, construa o grafo primeiro.</p>
-        {% else %}
-            <div class="container">
-                <!-- Distâncias do Comprador -->
-                <div class="bloco">
-                    <h3>Distâncias do Comprador para as Lojas</h3>
-                    {% for distancia in distancias_comprador_lojas %}
-                        <p class="distancia">{{ distancia }}</p>
-                    {% endfor %}
-                </div>
-
-                <!-- Distâncias entre as Lojas -->
-                <div class="bloco">
-                    <h3>Distâncias entre as Lojas</h3>
-                    {% for distancia in distancias_lojas_lojas %}
-                        <p class="distancia">{{ distancia }}</p>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-
+    {% if sucesso %}
+    <p style="color: green;">✅ Grafo construído com sucesso!</p>
+    {% elif erro %}
+    <p style="color: red;">❌ Erro ao obter coordenadas.</p>
+    {% endif %}
 
     <a href="/" class="voltar">← Voltar ao Menu</a>
 </body>
