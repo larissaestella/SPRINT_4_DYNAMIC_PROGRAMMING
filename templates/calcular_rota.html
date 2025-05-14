@@ -7,7 +7,6 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            /* font-size: 24px; */
             background: #939597;
             padding: 40px;
             max-width: 800px;
@@ -89,14 +88,12 @@
         
 </style>
         <script>
-            
-        // Função para exibir os campos de entrega baseado no número de entregas selecionado
+
         function showEntregaFields() {
             const numEntregas = document.getElementById("num_entregas").value;
             const entregaFieldsContainer = document.getElementById("entrega-fields-container");
             entregaFieldsContainer.innerHTML = ''; 
 
-            // Lógica para exibir os campos de entrega conforme o número de entregas escolhido
             for (let i = 1; i <= numEntregas; i++) {
                 const label = document.createElement("label");
                 label.textContent = `📥 Endereço da Entrega ${i}:`;
@@ -114,7 +111,6 @@
             entregaFieldsContainer.classList.remove("hidden");
         }
 
-        // Função para exibir o campo de número de entregas se o usuário escolher "outro"
         document.getElementById("num_entregas").addEventListener("change", function() {
             if (this.value === "outro") {
                 document.getElementById("outro-num").classList.remove("hidden");
@@ -127,16 +123,14 @@
     <h2>Calcular Rota Otimizada</h2>
 
     <form method="post">
-        <!-- Escolha a Loja de Origem -->
         <label>🚩 Escolha a Loja de Origem:</label>
         <select name="loja_index">
-            <option value="" disabled selected>Selecione</option>  <!-- "Selecione" como a primeira opção -->
+            <option value="" disabled selected>Selecione</option>  
             {% for loja in lojas %}
             <option value="{{ loop.index0 }}">{{ loja.nome }} - {{ loja.endereco }}</option>
             {% endfor %}
         </select><br><br>
 
-        <!-- Quantidade de Entregas -->
         <label>📦 Quantas entregas precisam ser feitas?</label>
         <select id="num_entregas" name="num_entregas" onchange="showEntregaFields()">
             <option value="" disabled selected>Selecione</option>
@@ -153,13 +147,11 @@
             <option value="outro">Outros (digite)</option>
         </select><br><br>
 
-        <!-- Campo para digitar número de entregas (quando "outro" é selecionado) -->
         <div id="outro-num" class="hidden">
             <label>Quantas entregas?</label>
             <input type="number" name="num_entregas_digitar" min="1" placeholder="Ex: 12"><br><br>
         </div>
 
-        <!-- Campos para os Endereços de Entrega -->
         <div id="entrega-fields-container" class="hidden"></div><br>
 
         <button type="submit">Calcular</button>

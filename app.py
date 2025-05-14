@@ -79,14 +79,13 @@ def exibir_grafo():
     if not grafo:
         return render_template('exibir_grafo.html', erro=True)
 
-    # Organizar as distâncias para facilitar a exibição no template
     distancias_comprador_lojas = []
     for destino, distancia in grafo.get('comprador', {}).items():
         distancias_comprador_lojas.append(f"Comprador → {destino}: {distancia} km")
 
     distancias_lojas_lojas = []
     for origem, destinos in grafo.items():
-        if origem != 'comprador':  # Evitar mostrar o comprador nas distâncias das lojas
+        if origem != 'comprador':  
             for destino, distancia in destinos.items():
                 distancias_lojas_lojas.append(f"{origem} → {destino}: {distancia} km")
 
@@ -149,17 +148,13 @@ def calcular_rota():
 
         # Calcular rota otimizada
         rota, distancia_total = otimizar_rota_dijkstra(loja_origem, entregas)
-        tempo_estimado = (distancia_total / 40) * 60  # 40 km/h média
+        tempo_estimado = (distancia_total / 40) * 60  # 40 km/h média, ajuste conforme necessário
 
-        # Dicionários auxiliares
         coordenadas_por_nome = {}
         nomes_por_coordenada = {}
-
-        # Loja de origem
         coordenadas_por_nome[loja_origem['nome']] = loja_origem['coordenadas']
         nomes_por_coordenada[loja_origem['coordenadas']] = loja_origem['nome']
 
-        # Entregas
         for entrega in entregas:
             coordenadas_por_nome[entrega['nome']] = entrega['coordenadas']
             nomes_por_coordenada[entrega['coordenadas']] = entrega['nome']
@@ -169,7 +164,6 @@ def calcular_rota():
         distancias = []
         coordenadas = []
 
-        # Criar dicionário nome → coordenada
         nome_para_coord = {loja_origem["nome"]: loja_origem["coordenadas"]}
         nome_para_coord.update({entrega["nome"]: entrega["coordenadas"] for entrega in entregas})
 
@@ -184,7 +178,6 @@ def calcular_rota():
                 f"📤 De: {origem} → {coord_origem}\n📥 Para: {destino} → {coord_destino}"
             )
 
-
         return render_template(
             'calcular_rota.html',
             rota=rota,
@@ -195,7 +188,6 @@ def calcular_rota():
             distancias=distancias,
             rotas_formatadas=rotas_formatadas
         )
-
 
     return render_template('calcular_rota.html', lojas=lojas)
 

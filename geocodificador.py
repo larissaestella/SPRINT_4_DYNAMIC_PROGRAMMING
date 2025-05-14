@@ -1,6 +1,8 @@
 import requests
 from math import radians, sin, cos, sqrt, atan2
 
+# ⚠️ ATENÇÃO: NÃO utilizar a chave abaixo para além desse projeto, por gentileza!
+
 API_KEY = "AIzaSyAEQbTwSKwW8I8u73kHsmzKjQTz9_hbpVE" 
 
 def obter_coordenadas(endereco):
@@ -24,7 +26,7 @@ def calcular_distancia_km(coord1, coord2):
     lat1, lon1 = radians(coord1[0]), radians(coord1[1])
     lat2, lon2 = radians(coord2[0]), radians(coord2[1])
 
-    raio = 6371  # raio da Terra em km
+    raio = 6371  
     dlat = lat2 - lat1
     dlon = lon2 - lon1
 

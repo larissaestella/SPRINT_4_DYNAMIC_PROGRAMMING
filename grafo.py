@@ -33,7 +33,7 @@ def otimizar_rota_dijkstra(origem, entregas):
         if not nao_visitados:
             break
         proximo, dist = min(nao_visitados, key=lambda x: x[1])
-        caminho.append((atual, proximo))  # <-- Agora retorna pares de nomes
+        caminho.append((atual, proximo))  
         distancia_total += dist
         visitados.add(proximo)
         atual = proximo
