@@ -86,15 +86,9 @@ SPRINT_4_DYNAMIC_PROGRAMMING/
 Certifique-se de instalar as dependências listadas no arquivo requirements.txt para rodar o projeto corretamente:
 
 ```
-Flask
-requests
+    Flask #framework web usado para construir a aplicação e interface HTML.
+    requests
 ```
-
-Descrição das bibliotecas:
-
-Flask: framework web usado para construir a aplicação e interface HTML.
-
-requests: permite fazer chamadas HTTP à API do Google Maps.
 
 ---
 
@@ -137,6 +131,8 @@ Navegação simples via HTML/CSS com layout responsivo.
 ### ✅ Status de Integração
 
 * **NOTA IMPORTANTE:** Este módulo **AINDA não está completamente integrado ao sistema principal do projeto** (catalogação, pedidos, login, etc.). Ele funciona de forma isolada para testes e validações de conceitos de grafos e otimização de rotas.
+
+* **Problema de Conexão com a API:** Se você estiver em uma rede com firewall ou proxy, pode ocorrer um problema de conexão ao acessar a API do Google Maps, pois essas configurações podem bloquear a comunicação com os servidores dela. Caso isso aconteça, recomendamos testar o código fora da rede corporativa para garantir que as requisições possam ser feitas sem bloqueios, permitindo o acesso correto à API.
 
 ---
 
