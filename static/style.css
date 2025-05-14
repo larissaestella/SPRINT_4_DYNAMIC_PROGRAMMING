@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    background: #939597;
+    padding: 40px;
+    text-align: center;
+    margin: 100px;
+}
+
+/* Títulos principais */
+h1, h2 {
+    color: #2c3e50;
+    text-align: center;
+}
+
+/* Lista de links do menu */
+ul {
+    list-style: none;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.624);
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+li {
+    margin: 35px 0;
+}
+
+/* Links principais */
+a {
+    display: inline-block;
+    width: 250px;
+    text-decoration: none;
+    color: white;
+    background: hsl(202.58, 100%, 16%);
+    padding: 25px 70px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+a:hover {
+    background: #297fb9cc;
+}
+
+/* Botão de voltar */
+.voltar {
+    margin-top: 30px;
+    display: inline-block;
+    background-color: #bdc3c7;
+    color: #2c3e50;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+}
+
+.voltar:hover {
+    background-color: #95a5a6;
+}
+
+/* Formulários */
+form {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Botões */
+button {
+    background-color: hsl(202.58, 100%, 16%);
+    color: white;
+    font-weight: bold;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+
+p {
+    font-weight: bold;
+    text-align: center;
+}
+
+p[style*="color: red"] {
+    color: red;
+}
+
+p[style*="color: green"] {
+    color: green;
+}
+
+/* Resultado da rota */
+.result {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.result h3 {
+    color: #2c3e50;
+}
+
+.result ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.result li {
+    padding: 5px 0;
+}
+
+.result a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+.result a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}

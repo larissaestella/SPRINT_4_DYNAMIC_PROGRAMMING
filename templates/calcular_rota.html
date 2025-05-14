@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Calcular Rota Otimizada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            background: #939597;
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+        }
+        h2 {
+            color: #34495e;
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 22px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        select, input, button, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: hsl(202.58, 100%, 16%);
+            color: white;
+            font-weight: bold;
+            font-size: large;
+            border: none;
+            cursor: pointer;
+            width: 250px;
+            text-align: center;
+            padding: 10px 30px;
+            margin-left: 270px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .result h3 {
+            color: #2c3e50;
+        }
+        .result ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .result li {
+            padding: 5px 0;
+        }
+        .result a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+        .result a:hover {
+            text-decoration: underline;
+        }
+        .hidden {
+            display: none;
+        }
+        .voltar {
+            margin-top: 30px;
+            background-color: #bdc3c7;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            float: right;
+        }
+        .voltar:hover {
+            background-color: #95a5a6;
+        }
+        
+</style>
+        <script>
+            
+        // Função para exibir os campos de entrega baseado no número de entregas selecionado
+        function showEntregaFields() {
+            const numEntregas = document.getElementById("num_entregas").value;
+            const entregaFieldsContainer = document.getElementById("entrega-fields-container");
+            entregaFieldsContainer.innerHTML = ''; 
+
+            // Lógica para exibir os campos de entrega conforme o número de entregas escolhido
+            for (let i = 1; i <= numEntregas; i++) {
+                const label = document.createElement("label");
+                label.textContent = `📥 Endereço da Entrega ${i}:`;
+
+                const textarea = document.createElement("textarea");
+                textarea.name = `endereco_entrega_${i}`;
+                textarea.rows = 3;
+                textarea.cols = 40;
+                textarea.placeholder = "Ex: Av. Paulista, 1106 - Bela Vista, São Paulo - SP";
+
+                entregaFieldsContainer.appendChild(label);
+                entregaFieldsContainer.appendChild(textarea);
+                entregaFieldsContainer.appendChild(document.createElement("br"));
+            }
+            entregaFieldsContainer.classList.remove("hidden");
+        }
+
+        // Função para exibir o campo de número de entregas se o usuário escolher "outro"
+        document.getElementById("num_entregas").addEventListener("change", function() {
+            if (this.value === "outro") {
+                document.getElementById("outro-num").classList.remove("hidden");
+            } else {
+                document.getElementById("outro-num").classList.add("hidden");
+            }
+        });
+    </script>
+
+    <h2>Calcular Rota Otimizada</h2>
+
+    <form method="post">
+        <!-- Escolha a Loja de Origem -->
+        <label>🚩 Escolha a Loja de Origem:</label>
+        <select name="loja_index">
+            <option value="" disabled selected>Selecione</option>  <!-- "Selecione" como a primeira opção -->
+            {% for loja in lojas %}
+            <option value="{{ loop.index0 }}">{{ loja.nome }} - {{ loja.endereco }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <!-- Quantidade de Entregas -->
+        <label>📦 Quantas entregas precisam ser feitas?</label>
+        <select id="num_entregas" name="num_entregas" onchange="showEntregaFields()">
+            <option value="" disabled selected>Selecione</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="outro">Outros (digite)</option>
+        </select><br><br>
+
+        <!-- Campo para digitar número de entregas (quando "outro" é selecionado) -->
+        <div id="outro-num" class="hidden">
+            <label>Quantas entregas?</label>
+            <input type="number" name="num_entregas_digitar" min="1" placeholder="Ex: 12"><br><br>
+        </div>
+
+        <!-- Campos para os Endereços de Entrega -->
+        <div id="entrega-fields-container" class="hidden"></div><br>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    {% if erro %}
+        <p style="color: red;">❌ {{ erro }}</p>
+    {% endif %}
+
+    {% if rota %}
+        <div class="result">
+            <h3>Resultado da Rota Otimizada:</h3>
+            <p><strong>🌍 Distância total estimada:</strong> {{ distancia }} km</p>
+            <p><strong>⏱️ Tempo médio estimado para cada entrega:</strong> {{ tempo|round }} minutos</p>
+            <h4>🗺️ Rota:</h4>
+            <ul>
+                {% for par in rota %}
+                    <li>{{ par[0] }} → {{ par[1] }}</li>
+                {% endfor %}
+            </ul>
+            <h4>🔗 Links para rota no Google Maps:</h4>
+            <ul>
+                {% for link in links %}
+                    <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <a href="/" class="voltar">← Voltar ao Menu</a>
+
+
+</body>
+</html>

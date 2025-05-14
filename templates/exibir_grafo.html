@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Grafo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            background: #939597;
+            padding: 40px;
+            max-width: 700px;
+            margin: auto;
+
+            
+        }
+        h2 {
+            color: #34495e;
+            text-align: center;
+        }
+        ul {
+            background: rgba(255, 255, 255, 0.624);
+            padding: 20px 40px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        p {
+            color: red;
+            font-weight: bold;
+        }
+        .voltar {
+            margin-top: 30px;
+            background-color: #bdc3c7;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            float: right;
+            margin-bottom: 40px;
+        }
+        .voltar:hover {
+            background-color: #95a5a6;
+        }
+    
+    </style>
+</head>
+<body>
+    <h2>Grafo com Distâncias (km)</h2>
+    {% if erro %}
+    <p>❌ Grafo ainda não foi construído.</p>
+    {% else %}
+    <ul>
+        {% for origem, destinos in grafo.items() %}
+            {% for destino, distancia in destinos.items() %}
+                <li>{{ origem }} → {{ destino }}: {{ distancia }} km</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <a href="/" class="voltar">← Voltar ao Menu</a>
+</body>
+</html>
