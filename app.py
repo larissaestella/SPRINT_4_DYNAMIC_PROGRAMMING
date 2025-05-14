@@ -35,6 +35,10 @@ def index():
 @app.route('/construir_grafo', methods=['GET', 'POST'])
 def construir_grafo():
     if request.method == 'POST':
+        # Limpa dados anteriores da sessão
+        session.pop('grafo', None)
+        session.pop('comprador', None)
+        
         endereco = request.form.get('endereco')
         coord = obter_coordenadas(endereco)
         if coord:
@@ -160,14 +164,26 @@ def calcular_rota():
             coordenadas_por_nome[entrega['nome']] = entrega['coordenadas']
             nomes_por_coordenada[entrega['coordenadas']] = entrega['nome']
 
-        # Links e distâncias
+        rotas_formatadas = []
         links = []
         distancias = []
+        coordenadas = []
+
+        # Criar dicionário nome → coordenada
+        nome_para_coord = {loja_origem["nome"]: loja_origem["coordenadas"]}
+        nome_para_coord.update({entrega["nome"]: entrega["coordenadas"] for entrega in entregas})
+
         for origem, destino in rota:
-            coord_origem = coordenadas_por_nome[origem]
-            coord_destino = coordenadas_por_nome[destino]
+            coord_origem = nome_para_coord[origem]
+            coord_destino = nome_para_coord[destino]
+
             links.append(gerar_links_rota_google(coord_origem, coord_destino))
             distancias.append(round(calcular_distancia_km(coord_origem, coord_destino), 2))
+
+            rotas_formatadas.append(
+                f"📤 De: {origem} → {coord_origem}\n📥 Para: {destino} → {coord_destino}"
+            )
+
 
         return render_template(
             'calcular_rota.html',
@@ -175,9 +191,11 @@ def calcular_rota():
             distancia=round(distancia_total, 2),
             tempo=tempo_estimado,
             links=links,
-            coordenadas=coordenadas_por_nome,
-            distancias=distancias
+            coordenadas=coordenadas,
+            distancias=distancias,
+            rotas_formatadas=rotas_formatadas
         )
+
 
     return render_template('calcular_rota.html', lojas=lojas)
 

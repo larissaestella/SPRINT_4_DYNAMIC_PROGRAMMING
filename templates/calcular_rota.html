@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext x='0' y='30' font-size='30'%3E🛣️%3C/text%3E%3C/svg%3E" type="image/svg+xml">
     <title>Calcular Rota Otimizada</title>
     <style>
         body {
@@ -80,6 +81,7 @@
             padding: 10px 16px;
             border-radius: 20px;
             float: right;
+            margin-bottom: 40px;
         }
         .voltar:hover {
             background-color: #95a5a6;
@@ -169,15 +171,23 @@
 
     {% if rota %}
         <div class="result">
-            <h3>Resultado da Rota Otimizada:</h3>
+            <h3>🚗 Resultado da Rota Otimizada:</h3>
             <p><strong>🌍 Distância total estimada:</strong> {{ distancia }} km</p>
             <p><strong>⏱️ Tempo médio estimado para cada entrega:</strong> {{ tempo|round }} minutos</p>
             <h4>🗺️ Rota:</h4>
-            <ul>
-                {% for par in rota %}
-                    <li>{{ par[0] }} → {{ par[1] }}</li>
-                {% endfor %}
-            </ul>
+            {% if rotas_formatadas %}
+            <div style="margin-top: 30px;">
+                    <ul style="list-style: none; padding: 0;">
+                        {% for item in rotas_formatadas %}
+                        <li style="background: #f5f5f5; border-radius: 8px; padding: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <pre style="margin: 0; font-family: 'Courier New', monospace;">{{ item }}</pre>
+                        </li>
+                        {% endfor %}
+                    </ul>
+            </div>
+            {% endif %}
+
+
             <h4>🔗 Links para rota no Google Maps:</h4>
             <ul>
                 {% for link in links %}
